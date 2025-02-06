@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckRole
 {
@@ -30,6 +31,9 @@ class CheckRole
         if (!$user) {
             return redirect('login'); // Redirect if user is not logged in
         }
+
+        // Log the user's role for debugging
+        // Log::info('User Role: ' . $user->role);
 
         // Check if the user's role is one of the allowed roles
         if (!in_array($user->role, $roles)) {

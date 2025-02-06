@@ -33,6 +33,8 @@ Route::post('/register-submit', [AuthController::class, 'registerSubmit'])->name
 Route::group(['middleware' => 'role:1', 'prefix' => 'user'], function () {
     Route::get('/dashboard', [UserDashboard::class, 'dashboard'])->name('user.dashboard');
     Route::resource('tickets', TicketController::class);
+    Route::get('get-items', [TicketController::class, 'getItems'])->name('getItems');
+    Route::post('add-item', [TicketController::class, 'addItem'])->name('addItem');
 });
 
 Route::group(['middleware' => 'role:2', 'prefix' => 'admin'], function () {

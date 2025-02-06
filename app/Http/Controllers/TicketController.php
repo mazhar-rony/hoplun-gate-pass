@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\User;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -64,5 +65,27 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         //
+    }
+
+    public function getItems()
+    {
+        $items = Item::orderBy('name')->get();
+
+        return response()->json($items);
+    }
+
+    public function addItem(Request $request)
+    {
+        $item = Item::find($request->product_id);
+
+        if (!$item) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        return response()->json([
+            'id' => $item->id,
+            'name' => $item->name,
+            'item_code' => $item->item_code
+        ]);
     }
 }
